@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { constant } from '../constants/app.constant'
 
@@ -21,6 +21,11 @@ export class APIServices {
     login(payload: any): Observable<any> {
         const url = constant.API_ENDPOINT + constant.LOGIN;
         return this.http.post(url, payload);
+    }
+
+    find_all(): Observable<any> {
+        const url = constant.API_ENDPOINT + constant.FIND_ALL;
+        return this.http.get(url);
     }
 
 }

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { APIServices } from '../services/api.services';
 import { NotificationComponent } from "../notification/notification.component";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,11 +19,12 @@ export class LoginComponent {
   notificationVisibility = false;
 
   constructor(
-    private service: APIServices
+    private service: APIServices,
+    private router: Router
   ) { }
   signInForm: FormGroup = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', Validators.required)
+    email: new FormControl('a1@b.com', [Validators.required, Validators.email]),
+    password: new FormControl('Abcd1234!', Validators.required)
   });
 
   signIn() {
@@ -37,6 +39,8 @@ export class LoginComponent {
       };
       this.service.login(payload).subscribe((res: any) => {
         this.signInForm.reset();
+        localStorage.setItem("token", res?.accessToken)
+        this.router.navigate(['/dashboard']);
       }, (error: any) => {
         this.setNotificationDetails(JSON.stringify(error?.error), 'error', true);
       });
