@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { APIServices } from '../services/api.services';
 import { NotificationComponent } from "../notification/notification.component";
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   notificationType = '';
   notificationMessage = '';
@@ -26,6 +26,11 @@ export class LoginComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required)
   });
+
+  ngOnInit(): void {
+    //Clear localStorage when user landing on login page
+    localStorage.clear();
+  }
 
   signIn() {
     if (this.signInForm.invalid) {
