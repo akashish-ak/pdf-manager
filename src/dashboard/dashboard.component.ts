@@ -2,11 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { APIServices } from '../services/api.services';
 import { DomSanitizer } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { SearchFiltedPDF } from "../pipe/search-pdf.pipe";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, SearchFiltedPDF],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -15,6 +17,7 @@ export class DashboardComponent implements OnInit {
   filteredPDFs: any[] = [];
   searchTerm = '';
   selectedPDF: any | null = null;
+  searchPDF: string = '';
 
   constructor(
     private service: APIServices,
