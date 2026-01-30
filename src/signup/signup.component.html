@@ -5,40 +5,79 @@
             <div class="space-y-4">
                 <div>
                     <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
-                    <input id="firstName" name="firstName" type="text" required
+                    <input type="text" formControlName="firstName"
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    @if(signUpForm.get('firstName')?.invalid && signUpForm.get('firstName')?.touched){
+                    <div class="mt-1 text-sm text-red-600">
+                        First Name is required!
+                    </div>
+                    }
                 </div>
                 <div>
                     <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
-                    <input id="lastName" name="lastName" type="text" required
+                    <input formControlName="lastName" type="text" required
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    @if(signUpForm.get('lastName')?.invalid && signUpForm.get('lastName')?.touched){
+                    <div class="mt-1 text-sm text-red-600">
+                        Last Name is required!
+                    </div>
+                    }
                 </div>
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
-                    <input id="email" name="email" type="email" required
+                    <input formControlName="email" type="email" required
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    @if(signUpForm.get('email')?.invalid && signUpForm.get('email')?.touched){
+                    <div class="mt-1 text-sm text-red-600">
+                        @if(signUpForm.get('email')?.errors?.['required']){
+                        <span>Email is required!</span>
+                        }
+                        @if(signUpForm.get('email')?.errors?.['email']){
+                        <span>Valid email is required!</span>
+                        }
+                    </div>
+                    }
                 </div>
 
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                    <input id="password" name="password" type="password" required
+                    <input formControlName="password" type="password" required
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    @if(signUpForm.get('password')?.invalid && signUpForm.get('password')?.touched){
+                    <div class="mt-1 text-sm text-red-600">
+                        @if(signUpForm.get('password')?.errors?.['required']){
+                        <span>Password is required!</span>
+                        }
+                    </div>
+                    }
                 </div>
                 <div>
                     <label for="passwordConfirmation" class="block text-sm font-medium text-gray-700">Password
                         Confirmation</label>
-                    <input id="passwordConfirmation" name="passwordConfirmation" type="password" required
+                    <input formControlName="passwordConfirmation" type="password" required
                         class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    @if(signUpForm.get('passwordConfirmation')?.touched){
+                    <div class="mt-1 text-sm text-red-600">
+                        @if(signUpForm.get('passwordConfirmation')?.errors?.['required']){
+                        <span>Password is required!</span>
+                        }
+                        @if(!signUpForm.get('passwordConfirmation')?.errors?.['required'] &&
+                        signUpForm.controls['password'].value !==
+                        signUpForm.controls['passwordConfirmation'].value){
+                        <span>Password should match!</span>
+                        }
+                    </div>
+                    }
                 </div>
             </div>
 
             <div class="flex gap-x-4">
-                <button type="reset"
+                <button type="reset" (click)="signUpForm.reset()"
                     class="flex-1 flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none">
                     Reset
                 </button>
 
-                <button type="submit"
+                <button type="submit" (click)="createAnAccount()"
                     class="flex-1 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none">
                     Create
                 </button>
@@ -47,3 +86,5 @@
         </form>
     </div>
 </div>
+<app-notification [type]="notificationType" [message]="notificationMessage" [isShow]="notificationVisibility">
+</app-notification>
