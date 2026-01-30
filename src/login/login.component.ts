@@ -23,8 +23,8 @@ export class LoginComponent {
     private router: Router
   ) { }
   signInForm: FormGroup = new FormGroup({
-    email: new FormControl('a1@b.com', [Validators.required, Validators.email]),
-    password: new FormControl('Abcd1234!', Validators.required)
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', Validators.required)
   });
 
   signIn() {
