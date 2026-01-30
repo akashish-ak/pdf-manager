@@ -19,7 +19,9 @@ export class SignupComponent {
   notificationMessage = '';
   notificationVisibility = false;
 
-  constructor(private service: APIServices) { }
+  constructor(
+    private service: APIServices,
+  ) { }
 
   signUpForm: FormGroup = new FormGroup({
     firstName: new FormControl('', Validators.required),
@@ -42,9 +44,9 @@ export class SignupComponent {
         "firstName": this.signUpForm.controls['firstName']?.value,
         "lastName": this.signUpForm.controls['lastName']?.value
       };
-      this.service.createNewAccount(payload).subscribe((res: any) => {
+      this.service.register(payload).subscribe((res: any) => {
         this.signUpForm.reset();
-        this.setNotificationDetails('Your account has been created successfully!', 'success', true);
+        this.setNotificationDetails('Your account has been created successfully! Now you can login using your credentials.', 'success', true);
       }, (error: any) => {
         this.setNotificationDetails(JSON.stringify(error?.error), 'error', true);
       });

@@ -12,8 +12,14 @@ export class APIServices {
     constructor(private http: HttpClient) { }
 
     //Create new account API
-    createNewAccount(payload: any): Observable<any> {
+    register(payload: any): Observable<any> {
         const url = constant.API_ENDPOINT + constant.REGISTER;
+        return this.http.post(url, payload);
+    }
+
+    //Validate the User
+    login(payload: any): Observable<any> {
+        const url = constant.API_ENDPOINT + constant.LOGIN;
         return this.http.post(url, payload);
     }
 
